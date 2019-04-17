@@ -11,12 +11,19 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/bolzano-classic-sessel', 'StaticItemController@index')->name('staticItem') ;
 
-Route::get('/job', 'JobController@index')->name('job');
+// Home page
+Route::get('/', [
+    'as'      => 'home',
+    'uses'    => 'PageController@index'
+]);
+
+// Catch all page controller (place at the very bottom)
+Route::get('{slug}', [
+    'uses' => 'PageController@getPage'
+])->where('slug', '([A-Za-z0-9\-\/]+)');
+
+
