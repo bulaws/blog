@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 
 class PageController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         return view('home');
@@ -14,15 +20,7 @@ class PageController extends Controller
 
     public function getPage($slug = null)
     {
-
-
-
         $page = PathControl::findBySlag($slug);
-
-//        var_dump($page);
-//        die;
-
-//        $page = $page->firstOrFail();
 
         return view($page->tpl)->with('page', $page);
     }
