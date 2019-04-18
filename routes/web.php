@@ -13,13 +13,20 @@
 
 Auth::routes();
 
-Route::get('/bolzano-classic-sessel', 'StaticItemController@index')->name('staticItem') ;
+Route::get('/', function () {
+    return view('welcome');
+});
 
-// Home page
-Route::get('/', [
-    'as'      => 'home',
-    'uses'    => 'PageController@index'
-]);
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/bolzano-classic-sessel', 'StaticItemController@index')->name('staticItem');
+
+
+//// Home page
+//Route::get('/', [
+//    'as'      => 'home',
+//    'uses'    => 'PageController@index'
+//]);
 
 // Catch all page controller (place at the very bottom)
 Route::get('{slug}', [
