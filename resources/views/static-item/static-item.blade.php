@@ -3,9 +3,8 @@
 @section('content')
     <div class="container">
 
-        @can('view-post')
+
         <p>Hello word!</p>
-        @endcan
 
         @can('delete-post')
             <button class="btn btn-danger">Delete</button>
