@@ -17,9 +17,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::group(['middleware' => ['auth']], function (){
 
-Route::get('/bolzano-classic-sessel', 'StaticItemController@index')->name('staticItem');
+    Route::get('/home', 'HomeController@index')->name('home');
+
+    Route::get('/bolzano-classic-sessel', 'StaticItemController@index')->name('staticItem');
+
+    Route::get('{slug}', [
+        'uses' => 'PageController@getPage'
+    ])->where('slug', '([A-Za-z0-9\-\/]+)');
+
+});
 
 
 //// Home page
@@ -29,8 +37,5 @@ Route::get('/bolzano-classic-sessel', 'StaticItemController@index')->name('stati
 //]);
 
 // Catch all page controller (place at the very bottom)
-Route::get('{slug}', [
-    'uses' => 'PageController@getPage'
-])->where('slug', '([A-Za-z0-9\-\/]+)');
 
 

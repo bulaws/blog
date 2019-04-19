@@ -7,11 +7,9 @@ use Illuminate\Http\Request;
 class StaticItemController extends Controller
 {
 
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
         return view('static-item.static-item');

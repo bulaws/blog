@@ -8,16 +8,18 @@ use Illuminate\Http\Request;
 class PageController extends Controller
 {
 
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
         return view('home');
     }
 
+    /**
+     * @param null $slug
+     * @return $this
+     */
     public function getPage($slug = null)
     {
         $page = PathControl::findBySlag($slug);
