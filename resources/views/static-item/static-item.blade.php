@@ -2,11 +2,19 @@
 
 @section('content')
     <div class="container">
+
+        @can('view-post')
         <p>Hello word!</p>
+        @endcan
 
-        <button class="btn btn-danger">Delete</button>
+        @can('delete-post')
+            <button class="btn btn-danger">Delete</button>
+        @endcan
 
-        <a href="" class="btn btn-primary">Item</a>
+        @can('create-post')
+            <a href="" class="btn btn-primary">Item</a>
+        @endcan
+
 
     </div>
 @endsection

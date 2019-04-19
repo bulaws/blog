@@ -15,16 +15,14 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         DB::table('users')->delete();
-        DB::table('roles')->delete();
-        DB::table('role_user')->delete();
 
         $roleUser = Role::where('name', 'User')->first();
         $roleAuthor = Role::where('name', 'Author')->first();
         $roleAdmin = Role::where('name', 'Admin')->first();
 
         $user = new User();
-        $user->name = 'visitor';
-        $user->email = 'visitor@example.com';
+        $user->name = 'user';
+        $user->email = 'user@example.com';
         $user->password = bcrypt('user');
         $user->created_at = now();
         $user->updated_at = now();
@@ -41,9 +39,9 @@ class UsersTableSeeder extends Seeder
         $admin->roles()->attach($roleAdmin);
 
         $reception = new User();
-        $reception->name = 'Reception';
-        $reception->email = 'Reception@example.com';
-        $reception->password = bcrypt('reception');
+        $reception->name = 'Author';
+        $reception->email = 'Author@example.com';
+        $reception->password = bcrypt('author');
         $reception->created_at = now();
         $reception->updated_at = now();
         $reception->save();

@@ -16,9 +16,6 @@ class PermissionsTableSeeder extends Seeder
     {
         DB::table('permissions')->delete();
         DB::table('permission_role')->delete();
-        DB::table('users')->delete();
-        DB::table('roles')->delete();
-        DB::table('role_user')->delete();
 
         $roleUser = Role::where('name', 'User')->first();
         $roleAuthor = Role::where('name', 'Author')->first();

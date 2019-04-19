@@ -19,9 +19,9 @@ Route::get('/', function () {
 
 Route::group(['middleware' => ['auth']], function (){
 
-    Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/home', ['uses'=>'HomeController@index', ])->name('home');
 
-    Route::get('/bolzano-classic-sessel', 'StaticItemController@index')->name('staticItem');
+    Route::get('/bolzano-classic-sessel',['uses'=>'StaticItemController@index', 'middleware' => [ 'role' => 'role:admin|user|edit-post'],])->name('staticItem');
 
     Route::get('{slug}', [
         'uses' => 'PageController@getPage'
