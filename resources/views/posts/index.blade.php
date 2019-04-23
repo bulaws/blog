@@ -7,7 +7,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         Posts
-                        @can('create-post')
+                        @can('posts.create')
                             <a class="pull-right btn btn-sm btn-primary" href="{{ route('create_post') }}">New</a>
                         @endcan
                     </div>

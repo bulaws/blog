@@ -8,11 +8,6 @@ use Zizaco\Entrust\EntrustRole;
 class Role extends Model
 {
 
-//    public function permissions()
-//    {
-//        return $this->belongsToMany('App\Models\Permission', 'permission_role', 'permission_id', 'role_id');
-//    }
-
     protected $fillable = [
         'id', 'name', 'description'
     ];
@@ -21,9 +16,14 @@ class Role extends Model
         'permissions' => 'array',
     ];
 
+    public function permissions()
+    {
+        return $this->belongsToMany('App\Models\Permission');
+    }
+
     public function users()
     {
-        return $this->belongsToMany(User::class, 'role_user');
+        return $this->belongsToMany('App\Models\User', 'role_user');
     }
 
     public function hasAccess(array $permissions) : bool

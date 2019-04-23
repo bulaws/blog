@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -11,7 +12,8 @@ class PostController extends Controller
     {
         $posts = Post::published()->paginate();
 
-        $user = auth()->user();
+//        var_dump(Auth::user()->can('posts.create'));
+//        die;
 
         return view('posts.index', compact(['posts', 'user']));
     }
