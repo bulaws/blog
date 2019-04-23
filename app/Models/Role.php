@@ -2,17 +2,41 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Model;
 use Zizaco\Entrust\EntrustRole;
 
-class Role extends EntrustRole
+class Role extends Model
 {
+
+//    public function permissions()
+//    {
+//        return $this->belongsToMany('App\Models\Permission', 'permission_role', 'permission_id', 'role_id');
+//    }
+
+    protected $fillable = [
+        'id', 'name', 'description'
+    ];
+
+    protected $casts = [
+        'permissions' => 'array',
+    ];
+
     public function users()
     {
-        return $this->belongsToMany('App\Models\User', 'role_user', 'role_id', 'user_id');
+        return $this->belongsToMany(User::class, 'role_user');
     }
 
-    public function permissions()
+    public function hasAccess(array $permissions) : bool
     {
-        return $this->belongsToMany('App\Models\Permission', 'permission_role', 'permission_id', 'role_id');
+        foreach ($permissions as $permission) {
+            if ($this->hasPermission($permission))
+                return true;
+        }
+        return false;
+    }
+
+    private function hasPermission(string $permission) : bool
+    {
+        return $this->permissions[$permission] ?? false;
     }
 }

@@ -3,12 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
 
 class User extends Authenticatable
 {
-
-    use EntrustUserTrait;
+    use  Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -39,30 +39,33 @@ class User extends Authenticatable
 
     public function roles()
     {
-        return $this->belongsToMany('App\Models\Role', 'role_user', 'user_id', 'role_id');
+        return $this->belongsToMany(Role::class, 'role_user');
     }
 
-    public function hasAnyRole($roles)
+    /**
+     * Checks if User has access to $permissions.
+     * @param array $permissions
+     * @return bool
+     */
+    public function hasAccess(array $permissions) : bool
     {
-        if (is_array($roles)) {
-            foreach ($roles as $role) {
-                if ($this->hasRole($role)) {
-                    return true;
-                }
-            }
-        } else {
-            if ($this->hasRole($roles)) {
+        // check if the permission is available in any role
+        foreach ($this->roles as $role) {
+            if($role->hasAccess($permissions)) {
                 return true;
             }
         }
         return false;
     }
 
-    public function hasRole($role)
+    /**
+     * Checks if the user belongs to role.
+     * @param string $roleSlug
+     * @return bool
+     */
+    public function inRole(string $roleSlug)
     {
-        if ($this->roles()->where('name', $role)->first()) {
-            return true;
-        }
-        return false;
+        return $this->roles()->where('name', $roleSlug)->count() == 1;
     }
+
 }

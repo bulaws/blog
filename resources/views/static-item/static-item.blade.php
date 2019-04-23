@@ -6,11 +6,11 @@
 
         <p>Hello word!</p>
 
-        @can('delete-post')
+        @can('delete-post', auth()->user())
             <button class="btn btn-danger">Delete</button>
         @endcan
 
-        @can('create-post')
+        @can('create-post', auth()->user())
             <a href="" class="btn btn-primary">Item</a>
         @endcan
 
